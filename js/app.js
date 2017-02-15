@@ -14,12 +14,34 @@ $(document).ready(function(){
       // Init a new game instance
       var gameInstance = new game(codeWidth);
       // Create the actual game
-      gameInstance.createGame(gameInstance.codeWidth)
-      gameInstance.start();
+      gameInstance.createGame(gameInstance.codeWidth);
+      var generatedCode = gameInstance.generateCode(gameInstance.codeWidth);
+      gameInstance.start(generatedCode);
     }
   })
 
   // Color clickhandler
+  $(".colors").click(function(){
+    debugger;
+    // Get the clicked color
+    var currentColor = $(this).attr("id");
+    // Find the line to go into
+    var lineToChange = $(".flat-line");
+    // Check if there is a line excistent
+    if (lineToChange.length > 0) {
+      // Get the lineID
+      var lineID = (lineToChange.length - 1);
+      // Get the blocks within the line
+      var block = $($(lineToChange[lineID]) + " .flat-block");
+      //
+      if (lineToChange.length > 0) {
+        $(lineToChange)
+      } else {
+        $(lineToChange).addClass("colored-block");
+        $(lineToChange).removeClass("flat-line");
+      }
+    }
+  });
 
 });
 
@@ -50,7 +72,13 @@ function game(codeWidth) {
     $("div.pre-question").show();
   }
   this.generateCode = function (codeWidth) {
-
+    // Create the Code object
+    var generatedCode = [];
+    for(i=0; i < codeWidth; i++) {
+      // Generate the code and push it to the array
+      generatedCode.push(Math.floor((Math.random() * 6) + 1));
+    }
+    return generatedCode;
   }
   this.active = true;
 }
